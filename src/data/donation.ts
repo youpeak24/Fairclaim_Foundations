@@ -15,14 +15,18 @@ export const PRESET_AMOUNTS = [250, 500, 1000, 2500, 5000, 10000] as const;
 export const POPULAR_AMOUNT = 1000;
 export const DEFAULT_AMOUNT = 1000;
 
-/** UPI ID that receives QR payments, e.g. "fairclaim@okhdfcbank". Empty hides the QR flow. */
-export const UPI_ID = env(import.meta.env.VITE_UPI_ID);
-/** Name shown in the customer's UPI app. */
-export const UPI_PAYEE_NAME = env(import.meta.env.VITE_UPI_PAYEE_NAME) || 'FAIRCLAIM FOUNDATION';
+/**
+ * UPI account behind the QR in public/brand/upi-qr.jpg (read from the QR itself).
+ * VITE_UPI_ID / VITE_UPI_PAYEE_NAME override them, e.g. once the foundation has its own account.
+ */
+export const UPI_ID = env(import.meta.env.VITE_UPI_ID) || 'directorvijay225@okicici';
+/** Name donors will see in their UPI app after scanning. It must match what the QR shows. */
+export const UPI_PAYEE_NAME = env(import.meta.env.VITE_UPI_PAYEE_NAME) || 'kevin vijay';
+/** The foundation's own UPI QR image. It is a static QR (no amount), so donors type the amount in their app. */
+export const UPI_QR_IMAGE = '/brand/upi-qr.jpg';
 /** WhatsApp number that receives payment screenshots: digits only with country code, e.g. 919876543210. */
 export const WHATSAPP_NUMBER = env(import.meta.env.VITE_WHATSAPP_NUMBER).replace(/\D/g, '');
 
-export const qrEnabled = Boolean(UPI_ID);
 export const whatsappEnabled = Boolean(WHATSAPP_NUMBER);
 
 export const donationFaqs: Faq[] = [
