@@ -108,6 +108,7 @@ const llmsPages = [
     'Initiatives',
     'The four proposed focus areas: community equity & access; public education & civic understanding; community dialogue & mediation; fairness research & policy insight.',
   ],
+  ['/donate', 'Donate', 'Give securely online (UPI, cards, net banking) or by UPI QR with a WhatsApp screenshot confirmation.'],
   ['/contact', 'Contact', 'Questions, ideas and collaboration enquiries.'],
 ];
 await writeFile(

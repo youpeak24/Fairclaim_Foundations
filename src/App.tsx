@@ -5,6 +5,7 @@ import { About } from './pages/About';
 import { MissionVision } from './pages/MissionVision';
 import { Initiatives } from './pages/Initiatives';
 import { Contact } from './pages/Contact';
+import { Donate } from './pages/Donate';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
 import { TermsConditions } from './pages/TermsConditions';
 import { NotFound } from './pages/NotFound';
@@ -18,6 +19,7 @@ export function AppRoutes() {
         <Route path="about" element={<About />} />
         <Route path="mission-vision" element={<MissionVision />} />
         <Route path="initiatives" element={<Initiatives />} />
+        <Route path="donate" element={<Donate />} />
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="terms-and-conditions" element={<TermsConditions />} />

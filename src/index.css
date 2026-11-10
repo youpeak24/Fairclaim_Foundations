@@ -429,3 +429,270 @@ html[data-motion="on"] [data-draw="y"].is-in { transform: scaleY(1); }
 .field-input[aria-invalid="true"]:focus-visible { box-shadow: 0 0 0 3px rgb(179 38 30 / 0.2); }
 select.field-input:invalid, select.field-input[data-empty="true"] { color: var(--color-ink-soft); }
 }
+
+/* ------------------------------------------------------------------
+   Donation widget
+   ------------------------------------------------------------------ */
+@property --spin {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes ring-spin { to { --spin: 360deg; } }
+@keyframes panel-in {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes chip-pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+@keyframes scan-sweep {
+  0% { transform: translateY(0); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(10.5rem); opacity: 0; }
+}
+@keyframes qr-reveal {
+  from { opacity: 0; transform: scale(0.92); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+@keyframes shine {
+  0% { transform: translateX(-130%) skewX(-18deg); }
+  60%, 100% { transform: translateX(260%) skewX(-18deg); }
+}
+@keyframes step-in {
+  from { opacity: 0; transform: translate3d(-10px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes burst {
+  0% { transform: scale(0.5); opacity: 0.7; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes pop-in {
+  0% { transform: scale(0.4); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(2%, -6%, 0) scale(1.06); }
+}
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.18); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.12); }
+  70% { transform: scale(1); }
+}
+@keyframes skeleton { to { background-position-x: -220%; } }
+
+/* Slowly turning gold-and-sky edge around the card */
+.donate-ring {
+  padding: 1.5px;
+  border-radius: 1.5rem;
+  background: conic-gradient(
+    from var(--spin),
+    rgb(7 31 70 / 0.1) 0 35%,
+    var(--color-gold) 58%,
+    var(--color-sky) 78%,
+    rgb(7 31 70 / 0.1) 100%
+  );
+  box-shadow: var(--shadow-medallion);
+  animation: ring-spin 9s linear infinite, enter-medallion 900ms var(--ease-out) 200ms both;
+}
+.donate-card { position: relative; }
+.donate-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 7rem;
+  background: radial-gradient(120% 100% at 85% -20%, rgb(212 166 42 / 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+.panel-in { animation: panel-in 380ms var(--ease-out) both; }
+.tab-pill { transition: transform 320ms var(--ease-out); }
+
+@layer components {
+  .amount-chip {
+    position: relative;
+    min-height: 3.25rem;
+    padding: 0.6rem 0.5rem;
+    border: 1.5px solid var(--color-line);
+    border-radius: 0.85rem;
+    background: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-navy);
+    cursor: pointer;
+    transition:
+      transform 180ms var(--ease-out),
+      border-color 180ms var(--ease-out),
+      background-color 180ms var(--ease-out),
+      box-shadow 180ms var(--ease-out),
+      color 180ms var(--ease-out);
+  }
+  .amount-chip:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-brand);
+    box-shadow: 0 10px 20px -12px rgb(7 31 70 / 0.4);
+  }
+  .amount-chip[data-selected="true"] {
+    border-color: var(--color-navy);
+    background: linear-gradient(145deg, var(--color-navy), var(--color-brand));
+    color: #fff;
+    box-shadow: 0 14px 26px -14px rgb(7 31 70 / 0.7);
+    animation: chip-pop 320ms var(--ease-out);
+  }
+  .chip-badge {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -52%);
+    padding: 0.12rem 0.55rem;
+    border-radius: 999px;
+    background: var(--color-gold);
+    color: var(--color-navy);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  /* Primary pay button: deep navy gradient with a travelling shine */
+  .btn-pay {
+    min-height: 3.5rem;
+    border-radius: 0.9rem;
+    background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-brand) 100%);
+    color: #fff;
+    font-size: 1rem;
+    box-shadow: 0 16px 30px -16px rgb(7 31 70 / 0.8);
+  }
+  .btn-pay:hover { background: linear-gradient(135deg, var(--color-navy-soft) 0%, #0a6fc4 100%); }
+  .btn-whatsapp {
+    border-radius: 0.9rem;
+    background: #0f7a3e;
+    color: #fff;
+    box-shadow: 0 14px 26px -14px rgb(15 122 62 / 0.8);
+  }
+  .btn-whatsapp:hover { background: #0c6633; }
+  .btn-shine { overflow: hidden; }
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 38%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.28), transparent);
+    transform: translateX(-130%) skewX(-18deg);
+    animation: shine 3.8s ease-in-out 1.2s infinite;
+    pointer-events: none;
+  }
+  .btn-shine:disabled::after { animation: none; opacity: 0; }
+
+  /* Decorative blurred orbs behind hero sections */
+  .orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(48px);
+    pointer-events: none;
+    animation: float-slow 14s ease-in-out infinite;
+  }
+}
+
+/* QR frame: corner brackets and a scanning line */
+.qr-frame {
+  position: relative;
+  padding: 0.85rem;
+  border-radius: 1.1rem;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgb(7 31 70 / 0.08), 0 18px 34px -18px rgb(7 31 70 / 0.5);
+}
+.qr-img { animation: qr-reveal 520ms var(--ease-out) both; }
+.qr-skeleton {
+  background: linear-gradient(110deg, #f1f4f8 30%, #fbfcfd 50%, #f1f4f8 70%);
+  background-size: 220% 100%;
+  animation: skeleton 1.6s linear infinite;
+}
+.qr-corner {
+  position: absolute;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 3px solid var(--color-gold);
+}
+.qr-tl { left: 0; top: 0; border-right: 0; border-bottom: 0; border-top-left-radius: 0.9rem; }
+.qr-tr { right: 0; top: 0; border-left: 0; border-bottom: 0; border-top-right-radius: 0.9rem; }
+.qr-bl { left: 0; bottom: 0; border-right: 0; border-top: 0; border-bottom-left-radius: 0.9rem; }
+.qr-br { right: 0; bottom: 0; border-left: 0; border-top: 0; border-bottom-right-radius: 0.9rem; }
+.scan-line {
+  position: absolute;
+  left: 0.85rem;
+  right: 0.85rem;
+  top: 0.85rem;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-sky), transparent);
+  box-shadow: 0 0 14px 2px rgb(0 159 227 / 0.55);
+  animation: scan-sweep 2.8s ease-in-out 600ms infinite;
+  pointer-events: none;
+}
+
+/* WhatsApp hand-off steps */
+.step-item {
+  position: relative;
+  display: flex;
+  gap: 0.85rem;
+  animation: step-in 480ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 110ms + 120ms);
+}
+.step-num {
+  display: grid;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-gold-pale);
+  color: var(--color-navy);
+  box-shadow: 0 0 0 1px rgb(212 166 42 / 0.5);
+}
+.step-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 1.1rem;
+  top: 2.4rem;
+  bottom: -1rem;
+  width: 1px;
+  background: repeating-linear-gradient(to bottom, rgb(212 166 42 / 0.7) 0 4px, transparent 4px 8px);
+}
+.check-badge { animation: pop-in 520ms var(--ease-out) both; }
+
+/* Success tick */
+.tick { animation: pop-in 520ms var(--ease-out) both; }
+.tick-ok { background: #e6f6ec; color: #1a7f45; }
+.tick-warn { background: #fdf3dc; color: #a05f00; }
+.tick svg circle, .tick svg path { stroke: currentColor; }
+.tick-circle { stroke-dasharray: 145; stroke-dashoffset: 145; animation: draw 700ms var(--ease-out) 150ms forwards; }
+.tick-mark { stroke-dasharray: 50; stroke-dashoffset: 50; animation: draw 450ms var(--ease-out) 650ms forwards; }
+.tick-burst {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  animation: burst 1100ms var(--ease-out) 500ms both;
+}
+
+.heart-beat { animation: heart-beat 2.4s ease-in-out infinite; transform-origin: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .donate-ring, .panel-in, .qr-img, .step-item, .check-badge, .tick, .tick-burst,
+  .scan-line, .orb, .heart-beat, .btn-shine::after, .qr-skeleton, .amount-chip {
+    animation: none !important;
+  }
+  .tick-circle, .tick-mark { animation: none !important; stroke-dashoffset: 0; }
+  .tab-pill, .amount-chip { transition: none; }
+  .amount-chip:hover { transform: none; }
+}

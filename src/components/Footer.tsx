@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { hasConfirmedContact, organization } from '../data/organization';
-import { mainNav, policyNav } from '../data/navigation';
+import { footerNav, policyNav } from '../data/navigation';
 
 const YEAR = new Date().getFullYear();
 
@@ -27,7 +27,7 @@ export function Footer() {
           <nav aria-label="Footer" className="lg:col-span-3 lg:col-start-7">
             <h2 className="eyebrow">Explore</h2>
             <ul className="mt-6 space-y-1">
-              {mainNav.map((item) => (
+              {footerNav.map((item) => (
                 <li key={item.href}>
                   <Link to={item.href} className="footer-link">
                     {item.name}

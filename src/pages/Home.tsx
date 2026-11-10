@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { Emblem } from '../components/Emblem';
+import { ArrowRight, Heart, MessageCircle, QrCode, ShieldCheck, Smartphone } from 'lucide-react';
+import { DonationWidget } from '../components/donate/DonationWidget';
 import { Faq } from '../components/Faq';
 import { CurveEdge, RingAccent, SunriseArcs, SunriseOnNavy } from '../components/Geometry';
 import { ButtonLink, Rule } from '../components/ui';
@@ -35,8 +35,10 @@ export function Home() {
 function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-ivory">
-      <div className="container-x grid items-center gap-12 pb-14 pt-10 sm:pt-14 lg:grid-cols-[3fr_2fr] lg:gap-8 lg:pb-24 lg:pt-12">
-        <div>
+      <div aria-hidden="true" className="orb -left-24 top-10 -z-10 h-72 w-72 bg-sky/15" />
+      <div aria-hidden="true" className="orb -right-20 bottom-24 -z-10 h-80 w-80 bg-gold/20 [animation-delay:-6s]" />
+      <div className="container-x grid items-start gap-12 pb-16 pt-10 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_31rem] lg:gap-14 lg:pb-28 lg:pt-14 xl:grid-cols-[minmax(0,1fr)_33rem]">
+        <div className="lg:pt-10">
           <p className="eyebrow enter" style={idx(0)}>
             Fairness. Dignity. Possibility.
           </p>
@@ -53,29 +55,48 @@ function Hero() {
             constructive dialogue, and a shared commitment to equitable opportunity.
           </p>
           <div className="enter mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4" style={idx(4)}>
-            <ButtonLink to="/#focus-areas">Explore our focus areas</ButtonLink>
-            <ButtonLink to="/#purpose" variant="ghost" arrow={false}>
-              Discover our purpose
+            <a href="#donate" className="btn btn-gold">
+              <Heart className="heart-beat h-4 w-4 shrink-0" aria-hidden="true" fill="currentColor" />
+              <span>Donate now</span>
+            </a>
+            <ButtonLink to="/#focus-areas" variant="ghost">
+              Explore our focus areas
             </ButtonLink>
           </div>
-          <p className="enter mt-10 flex items-center gap-4 font-serif text-lg italic text-ink-soft" style={idx(5)}>
+          <ul className="enter mt-10 grid max-w-[34rem] gap-3 text-[0.9375rem] text-ink-soft sm:grid-cols-2" style={idx(5)}>
+            {[
+              [ShieldCheck, 'Secure payment checkout'],
+              [QrCode, 'Quick UPI scan-and-pay'],
+              [Smartphone, 'Works with any UPI app'],
+              [MessageCircle, 'Confirmation on WhatsApp'],
+            ].map(([Icon, label]) => {
+              const I = Icon as typeof ShieldCheck;
+              return (
+                <li key={label as string} className="flex items-center gap-3">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-brand shadow-[0_0_0_1px_rgb(7_31_70/0.08)]">
+                    <I className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                  {label as string}
+                </li>
+              );
+            })}
+          </ul>
+          <p className="enter mt-10 flex items-center gap-4 font-serif text-lg italic text-ink-soft" style={idx(6)}>
             <span aria-hidden="true" className="h-px w-10 bg-gold" />
             Rooted in dignity. Guided by fairness.
           </p>
         </div>
 
-        {/* Emblem medallion */}
-        <div className="relative mx-auto aspect-square w-[min(80vw,23rem)] lg:w-full lg:max-w-[30rem] lg:justify-self-end">
+        {/* Donation widget, framed by the sunrise arcs */}
+        <div className="relative mx-auto w-full max-w-[34rem] scroll-mt-28 lg:max-w-none">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -inset-[38%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(0_159_227/0.22),rgb(7_93_168/0.08)_55%,transparent)]"
+            className="pointer-events-none absolute -inset-[22%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(0_159_227/0.2),rgb(7_93_168/0.07)_55%,transparent)]"
           />
-          <div data-parallax className="parallax absolute -inset-[9%]" aria-hidden="true">
+          <div data-parallax className="parallax pointer-events-none absolute -inset-x-[14%] -inset-y-[6%] -z-10 hidden sm:block" aria-hidden="true">
             <SunriseArcs animated className="h-full w-full" />
           </div>
-          <div className="enter-medallion absolute inset-[8%] grid place-items-center rounded-full bg-white p-[6.5%] shadow-[var(--shadow-medallion)] ring-1 ring-navy/[0.06]">
-            <Emblem priority />
-          </div>
+          <DonationWidget id="donate" />
         </div>
       </div>
       <CurveEdge fill="#ffffff" />

@@ -11,6 +11,9 @@ export const mainNav: NavItem[] = [
   { name: 'Contact', href: '/contact' },
 ];
 
+/** Footer "Explore" list: the main pages plus Donate (Donate is the header's call-to-action button). */
+export const footerNav: NavItem[] = [...mainNav, { name: 'Donate', href: '/donate' }];
+
 export const policyNav: NavItem[] = [
   { name: 'Privacy Policy', href: '/privacy-policy' },
   { name: 'Terms & Conditions', href: '/terms-and-conditions' },

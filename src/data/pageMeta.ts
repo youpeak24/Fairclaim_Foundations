@@ -65,6 +65,16 @@ export const pages: Record<string, PageEntry> = {
     priority: 0.8,
     sources: ['src/pages/Initiatives.tsx', 'src/data/initiatives.ts'],
   },
+  '/donate': {
+    title: 'Donate | Fairclaim Foundation',
+    name: 'Donate',
+    description:
+      'Support Fairclaim Foundation. Give securely online with UPI, cards or net banking, or scan a UPI QR and confirm your gift on WhatsApp.',
+    schemaType: 'WebPage',
+    changefreq: 'monthly',
+    priority: 0.9,
+    sources: ['src/pages/Donate.tsx', 'src/data/donation.ts', 'src/components/donate/DonationWidget.tsx'],
+  },
   '/contact': {
     title: 'Contact Fairclaim Foundation',
     name: 'Contact',

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Heart, Menu, X } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { mainNav } from '../data/navigation';
 
@@ -95,8 +95,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link to="/contact" className="btn btn-primary hidden !min-h-11 !px-5 lg:inline-flex">
-            Get in touch
+          <Link to="/donate" className="btn btn-gold btn-shine hidden !min-h-11 !px-5 sm:inline-flex">
+            <Heart className="heart-beat h-4 w-4" fill="currentColor" aria-hidden="true" />
+            Donate
           </Link>
           <button
             ref={toggleRef}
@@ -134,8 +135,9 @@ export function Header() {
             ))}
           </ul>
           <div className="pb-4 pt-4">
-            <Link to="/contact" className="btn btn-primary w-full">
-              Get in touch
+            <Link to="/donate" className="btn btn-gold btn-shine w-full">
+              <Heart className="heart-beat h-4 w-4" fill="currentColor" aria-hidden="true" />
+              Donate
             </Link>
           </div>
         </nav>
