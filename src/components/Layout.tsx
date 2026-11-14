@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { FloatingSocialButtons } from './FloatingSocialButtons';
 import { DocumentMeta, MotionController, ScrollManager } from './PageEffects';
 
 export function Layout() {
@@ -17,6 +18,7 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <FloatingSocialButtons />
     </div>
   );
 }

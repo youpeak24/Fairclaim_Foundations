@@ -22,7 +22,11 @@ export const organization = {
   },
 
   /** Verified social profiles only. */
-  social: [] as { platform: string; url: string }[],
+  social: [
+    { platform: 'Instagram', url: 'https://www.instagram.com/fairclaimfoundations/' },
+    { platform: 'YouTube', url: 'https://www.youtube.com/@FairclaimFoundations' },
+    { platform: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61595937069935' },
+  ],
 };
 
 /**
